@@ -18,7 +18,6 @@ export default function Cadastro() {
 
   useEffect(() => {
     let x = JSON.parse(localStorage.getItem("user"));
-
     if (x) {
       console.log("reset cadastro");
       navigate("/home");
@@ -28,6 +27,30 @@ export default function Cadastro() {
 
   async function cadastrar(e) {
     e.preventDefault();
+    let array = email.split("")
+    let arroba = false
+    let point = false
+    array.forEach((e,i)=>{
+      if(e === '@' && i !== 0){
+        arroba = true
+      }
+      if(e === '.' && i!==1 && i!==2){
+        point = true
+      }
+    })
+    console.log(arroba, point, username, senha)
+    if(username.length<4 || !arroba || !point || senha<6){
+      if(username.length<4){
+        return toast.error('username must have at least 4 caracteres')
+      }
+      if(!arroba || !point){
+        return toast.error('write your best email')
+      }
+      if(senha<6){
+        return toast.error('password too small')
+      }
+      return
+    }
     try {
       await createUserWithEmailAndPassword(auth, email, senha)
         .then(() => {

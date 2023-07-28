@@ -96,3 +96,14 @@
   line-break: anywhere;
   margin: 20px 0px;
 }
+#p1EU{
+  text-align: center;
+  font-size: 18px;
+  color: #272727;
+  font-weight: bold;
+  padding: 10px 30px;
+}
+#p2EU{
+  padding: 0px 40px;
+  color: #2f2f2fd7;
+}

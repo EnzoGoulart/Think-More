@@ -116,16 +116,16 @@ export default function Profile() {
           Logout
         </button>
         <img id="imgPr" src={FotoP} />
-        <label className="labelP">email</label>
+          <label className="labelP">email </label>
         <input id="emailPr"  value={user.user} />
         <label className="labelP">username</label>
-        <input
+        <input maxLength={20}
           id="usernamePr"
           value={newUsername}
           onChange={(e) => setNewUsername(e.target.value)}
         />
-        <label className="labelP">bio</label>
-        <textarea
+        <label className="labelP"></label>
+        <textarea maxLength={120}
           id="txtaP"
           value={newBio}
           onChange={(e) => setNewBio(e.target.value)}

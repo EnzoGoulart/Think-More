@@ -21,7 +21,7 @@ function RoutesApp() {
         <Route path="/post" element={<Private><Post/></Private>}/>
         <Route path="/user" element={<Private><User/></Private>}/>
         <Route path="/*" element={<NotFound />} />
-        <Route path="/:email/:number" component={<Private><ReadPost/></Private>} />
+        <Route path="/:email/:number" element={<Private><ReadPost/></Private>} />
       </Routes>
       
     </BrowserRouter>

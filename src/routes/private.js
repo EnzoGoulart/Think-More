@@ -10,7 +10,7 @@ export default function Private({ children }) {
   const [met, setMet] = useState(JSON.parse(localStorage.getItem('user')));
   const {user} = useContext(Context)
   useEffect(() => {
-
+    console.log('user: ', user)
     if (met === null) {
 
       return navigate('/');
