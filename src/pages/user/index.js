@@ -86,8 +86,10 @@ export default function User() {
               })
           ) : (
             <div>
-              <p id='p1EU'>Nothing to see here...</p>
-              <p id="p2EU">You don't did a post yet, click in the '+' button to add a post!</p>
+              <p id="p1EU">Nothing to see here...</p>
+              <p id="p2EU">
+                You don't did a post yet, click in the '+' button to add a post!
+              </p>
             </div>
           )}
         </div>

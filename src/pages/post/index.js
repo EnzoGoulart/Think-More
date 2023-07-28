@@ -10,16 +10,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import Loading from "../../components/loading";
 export default function Post() {
   const navigate = useNavigate();
   const { user, setUser, idPost, setIdPost } = useContext(Context);
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     async function getD() {
       try {
+        setLoading(true)
         const userDocRef = doc(db, "data", user.id);
         const docSnapshot = await getDoc(userDocRef);
         console.log(docSnapshot.data());
@@ -42,9 +44,10 @@ export default function Post() {
       } catch (error) {
         console.error("Erro ao obter usuário:", error.message);
         setUser(JSON.parse(localStorage.getItem("user")));
-      }
+      }finally{
       console.clear();
-    }
+      setLoading(false)
+    }}
     getD();
   }, [user.id, setUser]);
 
@@ -55,15 +58,10 @@ export default function Post() {
       content !== "" &&
       content.length <= 2200
     ) {
+      setLoading(true)
       const userDocRef = doc(db, "data", user.id);
       let name = `post${idPost}`;
       console.clear();
-      console.log(name);
-      console.log(idPost);
-      console.log(user.username);
-      console.log(user.user);
-      console.log(title, content);
-      console.log(new Date());
       await setDoc(
         userDocRef,
         {
@@ -84,6 +82,7 @@ export default function Post() {
       setIdPost(pratic);
       localStorage.setItem("idPost", pratic);
       toast.success("content posted sucessfull");
+      setLoading(false)
     } else {
       console.log("erro: nao entrou no if");
     }
@@ -91,6 +90,13 @@ export default function Post() {
   function resetItems() {
     setTitle("");
     setContent("");
+  }
+  if(!loading){
+    return(
+      <div>
+        <Loading/>
+      </div>
+    )
   }
   return (
     <div>
