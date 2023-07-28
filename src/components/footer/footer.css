@@ -1,0 +1,17 @@
+#footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    height: 50px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20%;
+}
+.svgF{
+    font-size: 22px;
+    cursor: pointer;
+}

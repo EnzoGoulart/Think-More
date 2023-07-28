@@ -1,0 +1,42 @@
+#Post{
+    background-color: #f0f0f0;
+    width: 95%;
+    max-width: 800px;
+    position: relative;
+    top: 70px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 12px;
+    margin: auto;
+}
+#firstLabelCorrect{
+    padding-top: 30px;
+}
+#cancelPo{
+    position: absolute;
+    font-size: 26px;
+    left: 0;
+    color: #2f2f2f;
+    margin: 10px;
+    cursor: pointer;
+    transition: all ease .2s;
+}
+#titlePo{
+    border-radius: 12px;
+    width: 80%;
+    padding: 5px 30px 5px 20px;
+    height: 40px;
+    resize: none;
+}
+#contentPo{
+    border-radius: 12px;
+    width: 80%;
+    height: 250px;
+    padding: 15px 30px 15px 20px;
+    resize: none;
+}
+.labelPo{
+    padding: 10px 0px;
+    font-size: 18px;
+}

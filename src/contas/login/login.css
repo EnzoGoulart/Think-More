@@ -1,0 +1,77 @@
+#divL{
+    width: 90%;
+    max-width: 500px;
+    background-color: #f0f0f0;
+    margin: 0px auto;
+    position: relative;
+    top: 10%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+}
+#divR{
+    width: 90%;
+    max-width: 500px;
+    background-color: #f0f0f0;
+    margin: 0px auto;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+}
+#h1L{
+    text-align: center;
+    padding: 10px;
+    width: 300px;
+    margin: -120px auto;
+}
+#h2L{
+    text-align: center;
+    padding-bottom: 15px;
+    width: 60%;
+    margin: auto;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+}
+#formL{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+}
+#labelL{
+    font-size: 16px;
+}
+#email, #senha, #username{
+    margin: 5px 0px;
+    padding: 5px 5px 5px 20px;
+    border-radius: 12px;
+}
+#botaoL{
+    margin: 15px auto;
+    background-color: #2f2f2f;
+    height: 35px;
+    border-radius: 12px;
+    width: 50%;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f0f0f0;
+    transition: ease .5s ;
+}
+#botaoL:hover{
+    background-color: #272727;
+    width: 80%;
+}
+#pL{
+    font-size: 16px;
+    text-align: center;
+    padding-bottom: 15px;
+}
+#lL{
+    font-weight: bold;
+}

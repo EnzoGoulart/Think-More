@@ -1,0 +1,98 @@
+#User {
+  min-height: 700px;
+  background-color: #f0f0f0;
+  width: 100%;
+}
+#userContent {
+  padding: 80px 0px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+#svgUs {
+  position: absolute;
+  font-size: 24px;
+  left: 5%;
+  cursor: pointer;
+  top: 10%;
+}
+#imgUs {
+  padding-top: 20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+#usernameUs {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 0px;
+}
+#bioUs {
+  line-break: anywhere;
+  padding: 0px 20%;
+  max-width: 500px;
+}
+#btnUs {
+  margin: 15px auto;
+  background-color: #2f2f2f;
+  height: 35px;
+  border-radius: 12px;
+  width: 120px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f0f0f0;
+  transition: ease 0.5s;
+}
+#btnUs:hover {
+  background-color: #272727;
+  width: 240px;
+}
+#linhaUs {
+  border-bottom: 2px solid #2f2f2f3a;
+  width: 60%;
+  max-width: 550px;
+}
+#containerPostUs {
+  width: 300px;
+  flex-direction: column;
+  color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  border-radius: 12px;
+  margin: 20px 0px;
+  background-color: #2f2f2f;
+  cursor: pointer;
+}
+#titlePostUs {
+  color: #f0f0f0;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 20px 30px 0px 30px ;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Definindo o número máximo de linhas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-break: anywhere;
+}
+#linhaPostUs {
+  border-bottom: 2px solid #f0f0f03a;
+  width: 80%;
+  
+  margin: 20px auto;
+
+}
+#contentPostUs {
+  color: #f0f0f0;
+  padding: 0px 30px 20px 30px ;
+  font-size: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Definindo o número máximo de linhas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-break: anywhere;
+  margin: 20px 0px;
+}

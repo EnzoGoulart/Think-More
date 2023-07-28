@@ -1,0 +1,19 @@
+#Header{
+    width: 100%;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    position: fixed;
+    z-index: 2;
+}
+#imgH{
+    width: 140px;
+    height: 100%;
+    user-select: none;
+}
+#svgH{
+    font-size: 22px;
+}
