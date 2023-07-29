@@ -2,7 +2,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import { doc, setDoc, getDoc, addDoc, collection } from "firebase/firestore";
+import { doc, setDoc, getDoc, } from "firebase/firestore";
 import { Context } from "../../context/context";
 import "./post.css";
 import { db } from "../../firebase";
