@@ -14,14 +14,17 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import FotoP from "../../imgs/iconePerfil.png";
 import { db } from "../../firebase";
 import "./profile.css";
+import Loading from '../../components/loading'
 export default function Profile() {
   const navigate = useNavigate();
   const { user, setUser, idPost, setIdPost } = useContext(Context);
   const [newUsername, setNewUsername] = useState("");
+  const [loading, setLoading] = useState(false)
   const [newBio, setNewBio] = useState("");
   useEffect(() => {
     async function getD() {
       try {
+        setLoading(true)
         const userDocRef = doc(db, "data", user.id);
         const docSnapshot = await getDoc(userDocRef);
 
@@ -48,12 +51,14 @@ export default function Profile() {
         setNewUsername(user.username);
         setNewBio(user.profile.bio || '');
         console.clear()
+        setLoading(false)
       }
     }
     getD();
   }, [user.id, setUser]);
 
   async function HLogout() {
+    setLoading(true)
     await signOut(auth)
       .then(() => {
         toast.success("exiting...");
@@ -74,6 +79,7 @@ export default function Profile() {
         toast.error("error");
         console.log(e);
       });
+      setLoading(false)
   }
   async function setNewProfile() {
     if (newUsername.length >= 4) {
@@ -89,7 +95,7 @@ export default function Profile() {
       localStorage.setItem('user', JSON.stringify(user))
       const userDocRef = doc(db, "data", user.id);
       try {
-        
+        setLoading(true)
         await setDoc(userDocRef, {
           username: newUsername,
           bio: newBio,
@@ -99,13 +105,20 @@ export default function Profile() {
       } catch (error) {
         console.error("Erro ao atualizar os dados:", error);
       }
-
+      setLoading(false)
     }
   }
   async function cancelAllAlterations(){
     setNewUsername(user.username)
     setNewBio(user.profile.bio)
     console.log(user)
+  }
+  if(loading){
+    return(
+      <div>
+        <Loading/>
+      </div>
+    )
   }
   return (
     <div>

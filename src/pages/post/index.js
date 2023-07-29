@@ -91,7 +91,7 @@ export default function Post() {
     setTitle("");
     setContent("");
   }
-  if(!loading){
+  if(loading){
     return(
       <div>
         <Loading/>

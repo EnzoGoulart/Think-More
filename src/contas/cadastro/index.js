@@ -9,27 +9,22 @@ import Logo from "../../imgs/logo.png";
 import { addDoc } from "firebase/firestore";
 import { doc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
+import Loading from '../../components/loading'
 export default function Cadastro() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false)
   const [username, setUsername] = useState("");
   const { user, setUser } = useContext(Context);
 
-  useEffect(() => {
-    let x = JSON.parse(localStorage.getItem("user"));
-    if (x) {
-      console.log("reset cadastro");
-      navigate("/home");
-      return;
-    }
-  }, []);
 
   async function cadastrar(e) {
     e.preventDefault();
     let array = email.split("")
     let arroba = false
     let point = false
+    let error = false
     array.forEach((e,i)=>{
       if(e === '@' && i !== 0){
         arroba = true
@@ -50,8 +45,10 @@ export default function Cadastro() {
         return toast.error('password too small')
       }
       return
+    
     }
     try {
+      setLoading(true)
       await createUserWithEmailAndPassword(auth, email, senha)
         .then(() => {
           toast.success("User registered");
@@ -66,11 +63,18 @@ export default function Cadastro() {
           });
         })
         .catch((e) => {
-          toast.error("error");
+          toast.error(e.message);
           console.log(e);
+          error = true
         });
     } catch (e) {
       console.log("aqui e: ", e);
+      error = true
+    }
+    if(error){
+      setLoading(false)
+      return
+      
     }
     try {
       const userRef = collection(db, "data");
@@ -98,8 +102,15 @@ export default function Cadastro() {
       console.log(e);
       console.log("aqui");
     }
+    setLoading(false)
   }
-
+  if(loading){
+    return(
+      <div>
+        <Loading/>
+      </div>
+    )
+  }
   return (
     <div>
       <div id="divR">
@@ -119,7 +130,7 @@ export default function Cadastro() {
             Email
           </label>
           <input
-            id="email"
+            id="email" type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="email@email.com"

@@ -1,0 +1,36 @@
+#conatinerLoading{
+    width: 100%;
+    height: 500px;
+}
+#divLoading{
+    width: 95%;
+    max-width: 700px;
+    height: 500px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 12px;
+    transform: translate(-50%,-50%);
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#spinnerLoading{
+    margin: 80px 0px;
+    width: 70px;
+    height: 70px;
+    animation: spinnerL 1s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+}
+@keyframes spinnerL {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+#txtLoading{
+    font-size: 18px;
+    padding: 0px 40px;
+}
