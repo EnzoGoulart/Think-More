@@ -1,10 +1,12 @@
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/context";
-import Logo from '../../imgs/logo.png'
+import Logo from "../../imgs/logo.png";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { collection, query, getDocs, where } from "firebase/firestore";
 import "./login.css";
+import { db } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 export default function Login() {
@@ -12,38 +14,87 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  useEffect(()=>{let x = JSON.parse(localStorage.getItem("user"));
-  if (x) {
-    
-    console.log('reset')
-    navigate("/home");
-    return
-  }},[navigate, setUser])
-
-  
+  useEffect(() => {
+    async function get() {
+      let local = localStorage.getItem("user");
+      if (!local) {
+        return;
+      }
+      let ls = JSON.parse(local);
+      if (ls.user) {
+        const postsRef = collection(db, "data");
+        const q = query(postsRef, where("email", "==", ls.user));
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+          const data = querySnapshot.docs.map((doc) => doc.data());
+          console.log(data[0].password);
+          let dado = data[0];
+          if (data[0].password === ls.password) {
+            setUser({
+              id: dado?.id,
+              user: dado?.user,
+              password: dado?.password,
+              username: dado?.username,
+              profile: {
+                bio: dado?.bio,
+                photo: null,
+              },
+            });
+            navigate("/home");
+          }
+        } else {
+          console.log("Documento não encontrado no Firestore.");
+        }
+      }
+    }
+    get();
+  }, [navigate, setUser]);
 
   async function logar(e) {
     e.preventDefault();
     if (email !== "" && senha !== "") {
-      try{
-      await signInWithEmailAndPassword(auth, email, senha)
-        .then(() => {
+      try {
+        await signInWithEmailAndPassword(auth, email, senha)
+          .then(() => {})
+          .catch((e) => {
+            toast.error("error");
+            console.log(e);
+          });
+      } catch (e) {
+        console.log(e);
+        return toast.error("cant be loged");
+      }
+      try {
+        const postsRef = collection(db, "data");
+        const q = query(postsRef, where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          console.log("a");
+          const data = querySnapshot.docs.map((doc) => doc.data());
+          console.log(data);
           toast.success("Logado com sucesso");
           setUser({
-            ...user,
-            user: email,
-            password: senha,
-            
+            id: data[0].id,
+            user: data[0].email,
+            username: data[0].username,
+            password: data[0].password,
+            profile: {
+              photo: null,
+              bio: data[0].bio,
+            },
           });
+
+          console.log(user)
           localStorage.setItem("user", JSON.stringify(user));
-          navigate('/home')
-        })
-        .catch((e) => {
-          //melhorar os erros aqui
-          console.log(e);
-        });}catch(e){
-          console.log(e)
+          navigate("/home");
+        } else {
+          console.log("nada aqui");
         }
+      } catch (e) {
+        console.log(e.message);
+        toast.error("cant be loged");
+      }
     } else {
       if (email === "" && senha === "") {
         toast.error("Digite seu email e senha");

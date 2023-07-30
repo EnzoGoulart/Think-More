@@ -63,17 +63,21 @@ export default function Post() {
       const userDocRef = collection(db, "posts");
       let name = `post${idPost}`;
       console.clear();
-      await addDoc(
-        userDocRef,
-        {
-          idPost,
-          username: user.username,
-          email: user.user,
-          title,
-          content,
-          date: new Date(),
-        },
-      );
+      const dataAtual = new Date();
+      const mes = dataAtual.getMonth() + 1;
+      const dia = dataAtual.getDate();
+      const ano = dataAtual.getFullYear();
+      const horas = dataAtual.getHours();
+      const minutos = dataAtual.getMinutes();
+      const dataHoraFormatada = `${mes}/${dia}/${ano} ${horas}:${minutos}`;
+      await addDoc(userDocRef, {
+        idPost,
+        username: user.username,
+        email: user.user,
+        title,
+        content,
+        date: dataHoraFormatada,
+      });
       let pratic = Number(idPost) + 1;
       setIdPost(pratic);
       localStorage.setItem("idPost", pratic);
@@ -82,14 +86,16 @@ export default function Post() {
     } else {
       console.log("erro: nao entrou no if");
     }
-    try{
+    try {
       const userDocRef = doc(db, "data", user.id);
-      await setDoc(userDocRef, {
-        idPost,
-      }, { merge: true });
-    }catch(e){
-
-    }
+      await setDoc(
+        userDocRef,
+        {
+          idPost,
+        },
+        { merge: true }
+      );
+    } catch (e) {}
   }
   function resetItems() {
     setTitle("");

@@ -15,6 +15,9 @@ export default function Loading() {
         "Loading doses of happiness for your day!",
         "In the meantime, spread kindness around you.",
         "Does anyone really read this?",
+        'Show that you know.',
+        'f internet',
+        'maybe in the nexts seconds'
       ];
       let random = Math.floor(Math.random() * frases.length);
       setTxt(frases[random]);

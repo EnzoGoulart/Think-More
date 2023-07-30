@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { auth, db } from "../../firebase";
 import { Context } from "../../context/context";
 import Logo from "../../imgs/logo.png";
-import { addDoc } from "firebase/firestore";
+import { addDoc, setDoc } from "firebase/firestore";
 import { doc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 import Loading from '../../components/loading'
@@ -85,6 +85,14 @@ export default function Cadastro() {
         photo: Perfil,
       });
       console.log("doc: ", documento.id);
+      const userDocRef = doc(db, "data", documento.id);
+      await setDoc(
+        userDocRef,
+        {
+          id: documento.id,
+        },
+        { merge: true }
+      );
       localStorage.setItem("id", documento.id);
       setUser({
         user: email,
@@ -98,6 +106,8 @@ export default function Cadastro() {
       });
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/home");
+      console.log(user)
+      console.log(email, documento.id, username, senha)
     } catch (e) {
       console.log(e);
       console.log("aqui");

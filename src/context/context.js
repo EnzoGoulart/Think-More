@@ -16,7 +16,7 @@ export const ContextProvider = ({ children }) => {
 
   const [idPost, setIdPost] = useState(Number(id) || 0);
   const [results, setResults] = useState('')
-  return (
+    return (
     <Context.Provider
       value={{
         user,

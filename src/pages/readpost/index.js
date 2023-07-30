@@ -28,7 +28,7 @@ export default function ReadPost() {
             i.idPost === Number(number)
           )
           console.log(data)
-          setPosts(data);
+          setPost(data[0]);
 
         } else {
           console.log("Nenhum documento encontrado com esse email.");
@@ -54,6 +54,7 @@ export default function ReadPost() {
       <Header />
       <div id="divCRP">
         <div id="divPerfilCRP">
+          <p>{}</p>
           <img id="imgCRP" src={Perfil} />
           <p id="unCRP">{post.username}</p>
         </div>

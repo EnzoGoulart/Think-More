@@ -1,13 +1,18 @@
+import { useNavigate, useParams } from "react-router-dom";
 import "./filterInput.css";
 import { useState } from "react";
 export default function FilterInput() {
+  const navigate = useNavigate()
+  const {input} = useParams()
   const [isPostsActive, setIsPostsActive] = useState(true);
   const handlePostsClick = () => {
     setIsPostsActive(true);
+    navigate(`/search/${input}/posts`)
   };
 
   const handleUsersClick = () => {
     setIsPostsActive(false);
+    navigate(`/search/${input}/users`)
   };
 
   return (

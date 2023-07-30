@@ -1,30 +1,26 @@
+import FilterInput from "../../components/filterInput";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
-import FilterInput from "../../components/filterInput";
 import Perfil from "../../imgs/iconePerfil.png";
-import "./searchPost.css";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/context";
 import { useNavigate, useParams } from "react-router-dom";
+import "./searchUsers.css";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
 import Loading from "../../components/loading";
-export default function SearchPost() {
+export default function SearchUsers() {
   const { input } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { user, setUser, results, setResults } = useContext(Context);
   useEffect(() => {
-    setResults('')
-    console.log(user);
-    console.log(input);
-    console.log(results);
-
     async function getData() {
+      setResults("");
       setLoading(true);
       try {
-        const postsRef = collection(db, "posts");
-        const q = query(postsRef, where("title", "==", input));
+        const postsRef = collection(db, "data");
+        const q = query(postsRef, where("username", "==", input));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
@@ -54,25 +50,17 @@ export default function SearchPost() {
     <div>
       <Header />
       <FilterInput />
-      <div id="containerSP">
+      <div id="containerUSP">
         {results.length > 0 ? (
-          results.map((post) => {
+          results.map((user) => {
             return (
               <div
-                onClick={() => {
-                  navigate(`/${post.email}/${post.idPost}`);
-                }}
-                id="containerPostSP"
-                key={post.idPost}
+                id="containerUserSP"
+                key={user.email}
+                onClick={() => navigate(`/see/${user.email}/profile`)}
               >
-                <img src={Perfil} />
-
-                <div id="contentPostSP">
-                  <p id="titlePostSP">{post.title}</p>
-                  <div id="linhaPostSP"></div>
-                  <p id="contentPostSP">{post.content}</p>
-                  <p id="usernamePostSP">{post.username}</p>
-                </div>
+                <img id="imgUserSP" src={Perfil} />
+                <p id="usernameUserSP">{user.username}</p>
               </div>
             );
           })
@@ -80,9 +68,9 @@ export default function SearchPost() {
           <div id="divNadaEncontradoPostSP">
           nothing found</div>
         )}
-
-        <p id="endSP">end</p>
+        <p id="endUSP">end</p>
       </div>
+
       <Footer />
     </div>
   );

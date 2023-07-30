@@ -30,8 +30,7 @@ export default function User() {
     async function getD() {
       setLoading(true);
       try {
-        console.log(user.id);
-        setLoading(true);
+        console.log(user);
         const userDocRef = doc(db, "data", user.id);
         const docSnapshot = await getDoc(userDocRef);
 
@@ -55,7 +54,7 @@ export default function User() {
       } catch (error) {
         console.error("Erro ao obter usuário:", error.message);
         setUser(JSON.parse(localStorage.getItem("user")));
-        return toast.error("error");
+        return 
       }
 
       try {
@@ -123,7 +122,7 @@ export default function User() {
         <div id="linhaUs"></div>
         <div>
           {posts.length > 0 ? (
-            posts.map((post) => {
+            posts.reverse().map((post) => {
               let email = encodeURIComponent(post.email);
               let number = post.idPost;
               return (
