@@ -73,7 +73,7 @@
   font-weight: bold;
   padding: 20px 30px 0px 30px ;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Definindo o número máximo de linhas */
+  -webkit-line-clamp: 3; 
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-break: anywhere;
@@ -87,14 +87,14 @@
 }
 #contentPostUs {
   color: #f0f0f0;
-  padding: 0px 30px 20px 30px ;
+  padding: 0px 30px 10px 30px ;
   font-size: 16px;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Definindo o número máximo de linhas */
+  -webkit-line-clamp: 3; 
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-break: anywhere;
-  margin: 20px 0px;
+  margin: 5px 0px;
 }
 #p1EU{
   text-align: center;

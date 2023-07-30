@@ -17,21 +17,19 @@ export default function ReadPost() {
     const fetchPost = async () => {
       try {
         setLoading(true)
-        const postsRef = collection(db, "data");
+        const postsRef = collection(db, "posts");
         const q = query(postsRef, where("email", "==", email));
         const querySnapshot = await getDocs(q);
-
+        
         if (!querySnapshot.empty) {
-          const doc = querySnapshot.docs[0];
-          let data = doc.data();
+          let data = querySnapshot.docs.map((doc) => doc.data());
+          
+          data = data.filter((i)=>
+            i.idPost === Number(number)
+          )
+          console.log(data)
           setPosts(data);
-          console.log(data);
 
-          let find = Object.values(data.posts).find(
-            (post) => post.idPost === Number(number)
-          );
-          console.log(find);
-          setPost(find);
         } else {
           console.log("Nenhum documento encontrado com esse email.");
         }

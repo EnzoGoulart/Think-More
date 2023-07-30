@@ -6,22 +6,71 @@ import Footer from "../../components/footer";
 import "./user.css";
 //editprofile yourposts logout
 import { useContext } from "react";
-import { getDoc, doc } from "firebase/firestore";
+import {
+  getDoc,
+  doc,
+  collection,
+  query,
+  where,
+  getDocs,
+  orderBy,
+} from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Perfil from "../../imgs/iconePerfil.png";
+import Loading from "../../components/loading";
+import { toast } from "react-toastify";
 export default function User() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { user, setUser, idPost, setIdPost } = useContext(Context);
   useEffect(() => {
     async function getD() {
+      setLoading(true);
       try {
+        console.log(user.id);
+        setLoading(true);
         const userDocRef = doc(db, "data", user.id);
         const docSnapshot = await getDoc(userDocRef);
 
         if (docSnapshot.exists()) {
+          const data = docSnapshot.data();
+          setUser({
+            user: data?.email,
+            password: data?.password,
+            id: user?.id,
+            username: data?.username,
+            profile: {
+              photo: data?.photo,
+              bio: data?.bio,
+            },
+          });
+          console.log(user.user);
+          localStorage.setItem("user", JSON.stringify(user));
+        } else {
+          console.log("Documento não encontrado no Firestore.");
+        }
+      } catch (error) {
+        console.error("Erro ao obter usuário:", error.message);
+        setUser(JSON.parse(localStorage.getItem("user")));
+        return toast.error("error");
+      }
+
+      try {
+        const postsRef = collection(db, "posts");
+        const q = query(postsRef, where("email", "==", user.user));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const data = querySnapshot.docs.map((doc) => doc.data());
+
+          setPosts(data);
+        } else {
+          console.log("Documento não encontrado no Firestore.");
+        }
+        /*if (docSnapshot.exists()) {
           const data = docSnapshot.data();
           setUser({
             user: data?.email,
@@ -40,17 +89,24 @@ export default function User() {
           setPosts(data.posts);
         } else {
           console.log("Documento não encontrado no Firestore.");
-        }
+        }*/
       } catch (error) {
         console.error("Erro ao obter usuário:", error.message);
         setUser(JSON.parse(localStorage.getItem("user")));
       } finally {
+        setLoading(false);
       }
     }
 
     getD();
-  }, [user.id, setUser]);
-
+  }, [user.id, user.user]);
+  if (loading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
   return (
     <div id="User">
       <Header />
@@ -66,24 +122,22 @@ export default function User() {
         </Link>
         <div id="linhaUs"></div>
         <div>
-          {posts !== undefined && posts !== null ? (
-            Object.values(posts)
-              .reverse()
-              .map((post) => {
-                let email = encodeURIComponent(post.email);
-                let number = post.idPost;
-                return (
-                  <div
-                    onClick={() => navigate(`/${email}/${number}`)}
-                    id="containerPostUs"
-                    key={post.idPost}
-                  >
-                    <p id="titlePostUs">{post.title}</p>
-                    <div id="linhaPostUs"></div>
-                    <p id="contentPostUs">{post.content}</p>
-                  </div>
-                );
-              })
+          {posts.length > 0 ? (
+            posts.map((post) => {
+              let email = encodeURIComponent(post.email);
+              let number = post.idPost;
+              return (
+                <div
+                  onClick={() => navigate(`/${email}/${number}`)}
+                  id="containerPostUs"
+                  key={post.idPost}
+                >
+                  <p id="titlePostUs">{post.title}</p>
+                  <div id="linhaPostUs"></div>
+                  <p id="contentPostUs">{post.content}</p>
+                </div>
+              );
+            })
           ) : (
             <div>
               <p id="p1EU">Nothing to see here...</p>

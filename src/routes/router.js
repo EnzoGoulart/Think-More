@@ -9,6 +9,7 @@ import Post from "../pages/post/";
 import NotFound from "../pages/nf";
 import User from '../pages/user' 
 import ReadPost from "../pages/readpost";
+import SearchPost from "../pages/searchPost";
 function RoutesApp() {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ function RoutesApp() {
         <Route path="/user" element={<Private><User/></Private>}/>
         <Route path="/*" element={<NotFound />} />
         <Route path="/:email/:number" element={<Private><ReadPost/></Private>} />
+        <Route path="/search/:input/posts" element={<Private><SearchPost/></Private>} />
       </Routes>
       
     </BrowserRouter>

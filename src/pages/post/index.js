@@ -2,7 +2,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import { doc, setDoc, getDoc, } from "firebase/firestore";
+import { doc, setDoc, getDoc, addDoc, collection } from "firebase/firestore";
 import { Context } from "../../context/context";
 import "./post.css";
 import { db } from "../../firebase";
@@ -17,11 +17,11 @@ export default function Post() {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function getD() {
       try {
-        setLoading(true)
+        setLoading(true);
         const userDocRef = doc(db, "data", user.id);
         const docSnapshot = await getDoc(userDocRef);
         console.log(docSnapshot.data());
@@ -44,10 +44,11 @@ export default function Post() {
       } catch (error) {
         console.error("Erro ao obter usuário:", error.message);
         setUser(JSON.parse(localStorage.getItem("user")));
-      }finally{
-      console.clear();
-      setLoading(false)
-    }}
+      } finally {
+        console.clear();
+        setLoading(false);
+      }
+    }
     getD();
   }, [user.id, setUser]);
 
@@ -58,45 +59,48 @@ export default function Post() {
       content !== "" &&
       content.length <= 2200
     ) {
-      setLoading(true)
-      const userDocRef = doc(db, "data", user.id);
+      setLoading(true);
+      const userDocRef = collection(db, "posts");
       let name = `post${idPost}`;
       console.clear();
-      await setDoc(
+      await addDoc(
         userDocRef,
         {
-          posts: {
-            [name]: {
-              idPost,
-              username: user.username,
-              email: user.user,
-              title,
-              content,
-              date: new Date(),
-            },
-          },
+          idPost,
+          username: user.username,
+          email: user.user,
+          title,
+          content,
+          date: new Date(),
         },
-        { merge: true }
       );
       let pratic = Number(idPost) + 1;
       setIdPost(pratic);
       localStorage.setItem("idPost", pratic);
       toast.success("content posted sucessfull");
-      setLoading(false)
+      setLoading(false);
     } else {
       console.log("erro: nao entrou no if");
+    }
+    try{
+      const userDocRef = doc(db, "data", user.id);
+      await setDoc(userDocRef, {
+        idPost,
+      }, { merge: true });
+    }catch(e){
+
     }
   }
   function resetItems() {
     setTitle("");
     setContent("");
   }
-  if(loading){
-    return(
+  if (loading) {
+    return (
       <div>
-        <Loading/>
+        <Loading />
       </div>
-    )
+    );
   }
   return (
     <div>

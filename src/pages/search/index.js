@@ -13,9 +13,8 @@ import { Context } from "../../context/context";
 import { doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 export default function Search() {
-  const { user, setUser, idPost, setIdPost } = useContext(Context);
+  const { user, setUser, idPost, setIdPost, results, setResults } = useContext(Context);
   const navigate = useNavigate();
-  const [users, setUsers] = useState({});
   const [title, setTitle] = useState({});
   const [content, setContent] = useState({});
   const [loading, setLoading] = useState(false);
@@ -24,6 +23,7 @@ export default function Search() {
     async function getD() {
       try {
         setLoading(true);
+        console.log(user.id);
         const userDocRef = doc(db, "data", user.id);
         const docSnapshot = await getDoc(userDocRef);
 
@@ -47,7 +47,6 @@ export default function Search() {
         console.error("Erro ao obter usuário:", error.message);
         setUser(JSON.parse(localStorage.getItem("user")));
       } finally {
-        console.clear();
         setLoading(false);
       }
     }
@@ -56,22 +55,9 @@ export default function Search() {
 
   async function SearchFor(e) {
     e.preventDefault();
-    
-    try {
-      const postsRef = collection(db, "data");
-      const q = query(postsRef, where("title", "==", input));
-      const querySnapshot = await getDocs(q);
-
-      if(!querySnapshot.empty){
-        const doc = querySnapshot.docs[0];
-          let data = doc.data();
-          console.log(data);
-          console.log('a')
-      }
-
-    } catch (e) {
-      console.log(e.message);
-    }
+    if(input!==''){
+        navigate(`/search/${input}/posts` )
+      } 
   }
   if (loading) {
     return (
