@@ -12,6 +12,7 @@ import ReadPost from "../pages/readpost";
 import SearchPost from "../pages/searchPost";
 import SearchUsers from "../pages/searchUsers";
 import SeeProfile from "../pages/seeProfile";
+import TellMe from "../pages/tellMe";
 function RoutesApp() {
   return (
     <BrowserRouter>
@@ -28,7 +29,9 @@ function RoutesApp() {
         <Route path="/search/:input/posts" element={<Private><SearchPost/></Private>} />
         <Route path="/search/:input/users" element={<Private><SearchUsers/></Private>} />
         <Route path="/see/:email/profile" element={<Private><SeeProfile/></Private>} />
+        <Route path="/tellme" element={<Private><TellMe/></Private>} />
       </Routes>
+      
       
     </BrowserRouter>
   );

@@ -13,17 +13,14 @@ import { Context } from "../../context/context";
 import { doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 export default function Search() {
-  const { user, setUser, idPost, setIdPost, results, setResults } = useContext(Context);
+  const { user, setUser } = useContext(Context);
   const navigate = useNavigate();
-  const [title, setTitle] = useState({});
-  const [content, setContent] = useState({});
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
   useEffect(() => {
     async function getD() {
       try {
         setLoading(true);
-        console.log(user.id);
         const userDocRef = doc(db, "data", user.id);
         const docSnapshot = await getDoc(userDocRef);
 

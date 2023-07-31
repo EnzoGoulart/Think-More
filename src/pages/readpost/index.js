@@ -28,7 +28,7 @@ export default function ReadPost() {
           data = data.filter((i)=>
             i.idPost === Number(number)
           )
-          console.log(data)
+          
           setPost(data[0]);
 
         } else {

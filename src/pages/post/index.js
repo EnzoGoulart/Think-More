@@ -24,7 +24,6 @@ export default function Post() {
         setLoading(true);
         const userDocRef = doc(db, "data", user.id);
         const docSnapshot = await getDoc(userDocRef);
-        console.log(docSnapshot.data());
         if (docSnapshot.exists()) {
           const data = docSnapshot.data();
           setUser({
@@ -61,12 +60,11 @@ export default function Post() {
     ) {
       try {
         const postsRef = collection(db, "posts");
-        console.log(user.user)
+      
         const q = query(postsRef, where("email", "==", user.user), limit(1), orderBy("idPost", "asc"));
         const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs.map((doc) => doc.data());
-          console.log(data);
-        console.log(querySnapshot)
+        
         if (!querySnapshot.empty) {
           console.log("a");
           const data = querySnapshot.docs.map((doc) => doc.data());

@@ -100,7 +100,6 @@ export default function Profile() {
           username: newUsername,
           bio: newBio,
         }, { merge: true });
-        console.log("Dados atualizados com sucesso!");
         toast.success(`successful update, ${newUsername}`)
       } catch (error) {
         console.error("Erro ao atualizar os dados:", error);

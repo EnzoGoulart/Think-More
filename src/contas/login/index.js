@@ -27,7 +27,6 @@ export default function Login() {
         const querySnapshot = await getDocs(q);
         if (!querySnapshot.empty) {
           const data = querySnapshot.docs.map((doc) => doc.data());
-          console.log(data[0].password);
           let dado = data[0];
           if (data[0].password === ls.password) {
             setUser({
@@ -70,9 +69,7 @@ export default function Login() {
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
-          console.log("a");
           const data = querySnapshot.docs.map((doc) => doc.data());
-          console.log(data);
           
           setUser({
             id: data[0].id,
@@ -84,13 +81,11 @@ export default function Login() {
               bio: data[0].bio,
             },
           });
-          console.log(data[0].username)
           toast.success(`welcome back, ${data[0].username}`);
-          console.log(user)
           localStorage.setItem("user", JSON.stringify(user));
           navigate("/home");
         } else {
-          console.log("nada aqui");
+          toast.error("email or password are wrong or does'not exists")
         }
       } catch (e) {
         console.log(e.message);

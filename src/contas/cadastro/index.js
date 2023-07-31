@@ -33,7 +33,6 @@ export default function Cadastro() {
         point = true
       }
     })
-    console.log(arroba, point, username, senha)
     if(username.length<4 || !arroba || !point || senha<6){
       if(username.length<4){
         return toast.error('username must have at least 4 caracteres')
@@ -84,7 +83,7 @@ export default function Cadastro() {
         password: senha,
         photo: Perfil,
       });
-      console.log("doc: ", documento.id);
+      
       const userDocRef = doc(db, "data", documento.id);
       await setDoc(
         userDocRef,
@@ -106,8 +105,6 @@ export default function Cadastro() {
       });
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/home");
-      console.log(user)
-      console.log(email, documento.id, username, senha)
     } catch (e) {
       console.log(e);
       console.log("aqui");

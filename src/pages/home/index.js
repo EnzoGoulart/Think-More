@@ -18,7 +18,6 @@ export default function Home() {
     async function getD() {
       setLoading(true);
       try {
-        console.log(user);
         const userDocRef = doc(db, "data", user.id);
         const docSnapshot = await getDoc(userDocRef);
 
@@ -34,7 +33,7 @@ export default function Home() {
               bio: data?.bio,
             },
           });
-          console.log(user.user);
+  
           localStorage.setItem("user", JSON.stringify(user));
         } else {
           console.log("Documento não encontrado no Firestore.");

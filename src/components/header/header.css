@@ -13,7 +13,19 @@
     width: 140px;
     height: 100%;
     user-select: none;
+    margin-right: 5%;
 }
 #svgH{
     font-size: 22px;
+}
+
+#txtH{
+    font-size: 22px;
+}
+#divIconsH{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 20%;
+    margin-left: 5%;
 }

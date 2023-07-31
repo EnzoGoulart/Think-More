@@ -21,7 +21,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Perfil from "../../imgs/iconePerfil.png";
 import Loading from "../../components/loading";
-import { toast } from "react-toastify";
 export default function User() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
@@ -31,7 +30,6 @@ export default function User() {
     async function getD() {
       setLoading(true);
       try {
-        console.log(user);
         const userDocRef = doc(db, "data", user.id);
         const docSnapshot = await getDoc(userDocRef);
 
@@ -47,7 +45,6 @@ export default function User() {
               bio: data?.bio,
             },
           });
-          console.log(user.user);
           localStorage.setItem("user", JSON.stringify(user));
         } else {
           console.log("Documento não encontrado no Firestore.");
@@ -55,12 +52,17 @@ export default function User() {
       } catch (error) {
         console.error("Erro ao obter usuário:", error.message);
         setUser(JSON.parse(localStorage.getItem("user")));
-        return 
+        return;
       }
 
       try {
         const postsRef = collection(db, "posts");
-        const q = query(postsRef, where("email", "==", user.user), limit(30), orderBy('date', 'asc'));
+        const q = query(
+          postsRef,
+          where("email", "==", user.user),
+          limit(30),
+          orderBy("date", "asc")
+        );
         const querySnapshot = await getDocs(q);
         if (!querySnapshot.empty) {
           const data = querySnapshot.docs.map((doc) => doc.data());
@@ -69,26 +71,6 @@ export default function User() {
         } else {
           console.log("Documento não encontrado no Firestore.");
         }
-        /*if (docSnapshot.exists()) {
-          const data = docSnapshot.data();
-          setUser({
-            user: data?.email,
-            password: data?.password,
-            id: user?.id,
-            username: data?.username,
-            profile: {
-              photo: data?.photo,
-              bio: data?.bio,
-            },
-          });
-          localStorage.setItem("user", JSON.stringify(user));
-          console.clear();
-
-          console.log(data.posts);
-          setPosts(data.posts);
-        } else {
-          console.log("Documento não encontrado no Firestore.");
-        }*/
       } catch (error) {
         console.error("Erro ao obter usuário:", error.message);
         setUser(JSON.parse(localStorage.getItem("user")));
@@ -125,7 +107,6 @@ export default function User() {
             posts.reverse().map((post) => {
               let email = encodeURIComponent(post.email);
               let number = post.idPost;
-              console.log(post.title, post.idPost)
               return (
                 <div
                   onClick={() => navigate(`/${email}/${number}`)}

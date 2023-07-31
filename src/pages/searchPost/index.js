@@ -28,10 +28,10 @@ export default function SearchPost() {
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
-          console.log("a");
+
           const data = querySnapshot.docs.map((doc) => doc.data());
           setResults(data);
-          console.log(data);
+
         } else {
           console.log("nada aqui");
         }
