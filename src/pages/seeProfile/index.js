@@ -43,7 +43,7 @@ export default function SeeProfile() {
       setLoading(true);
       try {
         const postsRef = collection(db, "posts");
-        const q = query(postsRef, where("email", "", email), limit(20), orderBy('date', 'asc'));
+        const q = query(postsRef, where("email", "==", email), limit(20), orderBy('date', 'asc'));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {

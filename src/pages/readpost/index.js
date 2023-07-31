@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { db } from "../../firebase";
 import Perfil from "../../imgs/iconePerfil.png";
 import "./rp.css";
 export default function ReadPost() {
+  const navigate = useNavigate()
   const { email, number } = useParams();
   const [posts, setPosts] = useState({});
   const [loading, setLoading] = useState(false);
@@ -53,10 +54,11 @@ export default function ReadPost() {
     <div id="CRP">
       <Header />
       <div id="divCRP">
-        <div id="divPerfilCRP">
-          <p>{}</p>
-          <img id="imgCRP" src={Perfil} />
-          <p id="unCRP">{post.username}</p>
+        <div id="navigateCRP" onClick={()=> navigate(`/see/${encodeURIComponent(post.email)}/profile`)}>
+          <div id="divPerfilCRP">
+            <img id="imgCRP" src={Perfil} />
+            <p id="unCRP">{post.username}</p>
+          </div>
         </div>
         <div id="linha1CRP"></div>
         <p className="pDivisorCRP">title</p>

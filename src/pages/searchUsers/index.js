@@ -20,7 +20,7 @@ export default function SearchUsers() {
       setLoading(true);
       try {
         const postsRef = collection(db, "data");
-        const q = query(postsRef, where("username", "==", input), limit(20), orderBy('date', 'asc'));
+        const q = query(postsRef, where("username", "==", input), limit(20));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {

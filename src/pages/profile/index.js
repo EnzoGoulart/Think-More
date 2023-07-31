@@ -110,8 +110,7 @@ export default function Profile() {
   }
   async function cancelAllAlterations(){
     setNewUsername(user.username)
-    setNewBio(user.profile.bio)
-    console.log(user)
+    setNewBio(user.profile.bio || '')
   }
   if(loading){
     return(

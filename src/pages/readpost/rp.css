@@ -58,3 +58,6 @@
     line-break: anywhere;
     margin-bottom: 100px;
 }
+#navigateCRP{
+    cursor: pointer;
+}

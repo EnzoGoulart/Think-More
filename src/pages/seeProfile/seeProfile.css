@@ -37,6 +37,8 @@
   justify-content: center;
   flex-direction: column;
   width: 100%;
+  padding-bottom: 80px;
+  
 }
 #txtPostsSEPR {
   color: #f0f0f0c9;
@@ -54,6 +56,7 @@
   flex-direction: column;
   margin: 15px 0px;
   border-radius: 12px;
+  cursor: pointer;
   background-color: #f0f0f0;
 }
 #titlePostSEPR {
