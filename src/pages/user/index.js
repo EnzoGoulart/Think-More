@@ -14,6 +14,7 @@ import {
   where,
   getDocs,
   orderBy,
+  limit,
 } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -59,9 +60,8 @@ export default function User() {
 
       try {
         const postsRef = collection(db, "posts");
-        const q = query(postsRef, where("email", "==", user.user));
+        const q = query(postsRef, where("email", "==", user.user), limit(30), orderBy('date', 'asc'));
         const querySnapshot = await getDocs(q);
-
         if (!querySnapshot.empty) {
           const data = querySnapshot.docs.map((doc) => doc.data());
 
@@ -125,6 +125,7 @@ export default function User() {
             posts.reverse().map((post) => {
               let email = encodeURIComponent(post.email);
               let number = post.idPost;
+              console.log(post.title, post.idPost)
               return (
                 <div
                   onClick={() => navigate(`/${email}/${number}`)}

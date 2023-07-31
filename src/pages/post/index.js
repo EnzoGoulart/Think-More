@@ -2,7 +2,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import { doc, setDoc, getDoc, addDoc, collection } from "firebase/firestore";
+import { query,where,limit,doc, setDoc, getDoc, addDoc, collection, getDocs, orderBy } from "firebase/firestore";
 import { Context } from "../../context/context";
 import "./post.css";
 import { db } from "../../firebase";
@@ -59,6 +59,25 @@ export default function Post() {
       content !== "" &&
       content.length <= 2200
     ) {
+      try {
+        const postsRef = collection(db, "posts");
+        console.log(user.user)
+        const q = query(postsRef, where("email", "==", user.user), limit(1), orderBy("idPost", "asc"));
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map((doc) => doc.data());
+          console.log(data);
+        console.log(querySnapshot)
+        if (!querySnapshot.empty) {
+          console.log("a");
+          const data = querySnapshot.docs.map((doc) => doc.data());
+          console.log(data);
+        } else {
+          setIdPost(0)
+        }
+      } catch (e) {
+        console.log(e.message);
+        return toast.error('error')
+      }
       setLoading(true);
       const userDocRef = collection(db, "posts");
       let name = `post${idPost}`;
@@ -82,6 +101,8 @@ export default function Post() {
       setIdPost(pratic);
       localStorage.setItem("idPost", pratic);
       toast.success("content posted sucessfull");
+      setTitle("");
+      setContent("");
       setLoading(false);
     } else {
       console.log("erro: nao entrou no if");

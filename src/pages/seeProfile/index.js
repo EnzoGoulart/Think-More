@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./seeProfile.css";
 import Loading from "../../components/loading";
 import Perfil from "../../imgs/iconePerfil.png";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, limit, orderBy } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { Context } from "../../context/context";
@@ -43,7 +43,7 @@ export default function SeeProfile() {
       setLoading(true);
       try {
         const postsRef = collection(db, "posts");
-        const q = query(postsRef, where("email", "==", email));
+        const q = query(postsRef, where("email", "", email), limit(20), orderBy('date', 'asc'));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {

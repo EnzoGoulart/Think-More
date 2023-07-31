@@ -6,7 +6,7 @@ import "./searchPost.css";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/context";
 import { useNavigate, useParams } from "react-router-dom";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
 import Loading from "../../components/loading";
 export default function SearchPost() {
@@ -24,7 +24,7 @@ export default function SearchPost() {
       setLoading(true);
       try {
         const postsRef = collection(db, "posts");
-        const q = query(postsRef, where("title", "==", input));
+        const q = query(postsRef, where("title", "==", input), limit(20));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {

@@ -73,7 +73,7 @@ export default function Login() {
           console.log("a");
           const data = querySnapshot.docs.map((doc) => doc.data());
           console.log(data);
-          toast.success("Logado com sucesso");
+          
           setUser({
             id: data[0].id,
             user: data[0].email,
@@ -84,7 +84,8 @@ export default function Login() {
               bio: data[0].bio,
             },
           });
-
+          console.log(data[0].username)
+          toast.success(`welcome back, ${data[0].username}`);
           console.log(user)
           localStorage.setItem("user", JSON.stringify(user));
           navigate("/home");

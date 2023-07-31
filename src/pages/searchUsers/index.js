@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/context";
 import { useNavigate, useParams } from "react-router-dom";
 import "./searchUsers.css";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
 import Loading from "../../components/loading";
 export default function SearchUsers() {
@@ -20,7 +20,7 @@ export default function SearchUsers() {
       setLoading(true);
       try {
         const postsRef = collection(db, "data");
-        const q = query(postsRef, where("username", "==", input));
+        const q = query(postsRef, where("username", "==", input), limit(20), orderBy('date', 'asc'));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
