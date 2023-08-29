@@ -15,11 +15,7 @@ export default function SearchPost() {
   const [loading, setLoading] = useState(false);
   const { user, setUser, results, setResults } = useContext(Context);
   useEffect(() => {
-    setResults('')
-    console.log(user);
-    console.log(input);
-    console.log(results);
-
+    setResults('')  
     async function getData() {
       setLoading(true);
       try {

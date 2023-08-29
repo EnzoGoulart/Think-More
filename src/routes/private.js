@@ -7,13 +7,14 @@ import { toast } from "react-toastify";
 
 export default function Private({ children }) {
   const navigate = useNavigate();
-  const [met, setMet] = useState(JSON.parse(localStorage.getItem('user')));
-  const {user} = useContext(Context)
+  const [met, setMet] = useState(JSON.parse(localStorage.getItem('user'))); 
+  const {user,setUser} = useContext(Context)
   useEffect(() => {
     if (met === null) {
 
       return navigate('/');
     }
+    setUser(met)
   }, [met, navigate]);
 
   return children;

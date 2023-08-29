@@ -92,8 +92,7 @@ export default function User() {
     <div id="User">
       <Header />
       <div id="userContent">
-        <Link to="/home">
-          <FontAwesomeIcon id="svgUs" icon={faArrowLeft} />
+        <Link to="/home"> 
         </Link>
         <img id="imgUs" src={Perfil} />
         <p id="usernameUs">{user.username}</p>
@@ -101,7 +100,9 @@ export default function User() {
         <Link to="/profile">
           <button id="btnUs">settings</button>
         </Link>
-        <div id="linhaUs"></div>
+        <div id="divLinha1SEPR"></div>
+        <p id="txtPostsSEPR">posts</p>
+        <div id="divLinha2SEPR"></div>
         <div>
           {posts.length > 0 ? (
             posts.reverse().map((post) => {

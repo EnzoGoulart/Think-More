@@ -96,8 +96,7 @@ export default function Cadastro() {
       setUser({
         user: email,
         username,
-        id: documento.id,
-        password: senha,
+        id: documento.id, 
         profile: {
           photo: Perfil,
           bio: null,

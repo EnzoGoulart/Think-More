@@ -3,7 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import {getAuth} from 'firebase/auth'
-
+// Import the functions you need from the SDKs you need
+ 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -12,6 +13,7 @@ import {getAuth} from 'firebase/auth'
 const firebaseConfig = {
   apiKey: "AIzaSyDpLJSA2BNWDefigz0GHs3Hc6H2b7_4LnI",
   authDomain: "tkmore-62aa9.firebaseapp.com",
+  databaseURL: "https://tkmore-62aa9-default-rtdb.firebaseio.com",
   projectId: "tkmore-62aa9",
   storageBucket: "tkmore-62aa9.appspot.com",
   messagingSenderId: "396904267765",
@@ -20,6 +22,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+
+
+
 const app = initializeApp(firebaseConfig);
 const fApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);

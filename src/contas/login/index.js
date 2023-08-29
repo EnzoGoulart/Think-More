@@ -15,9 +15,9 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   useEffect(() => {
-    async function get() {
+    async function getDV() {
       let local = localStorage.getItem("user");
-      if (!local) {
+      if (!local || local?.password == '' || !local?.password) {
         return;
       }
       let ls = JSON.parse(local);
@@ -31,8 +31,7 @@ export default function Login() {
           if (data[0].password === ls.password) {
             setUser({
               id: dado?.id,
-              user: dado?.user,
-              password: dado?.password,
+              user: dado?.user, 
               username: dado?.username,
               profile: {
                 bio: dado?.bio,
@@ -46,7 +45,7 @@ export default function Login() {
         }
       }
     }
-    get();
+    getDV();
   }, [navigate, setUser]);
 
   async function logar(e) {

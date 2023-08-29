@@ -1,11 +1,12 @@
 import { useEffect, useContext, useState } from "react";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
-import { doc, getDoc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
+import {  getDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
+import { inMemoryPersistence, signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { Context } from "../../context/context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,36 +24,36 @@ export default function Profile() {
   const [newBio, setNewBio] = useState("");
   useEffect(() => {
     async function getD() {
-      try {
-        setLoading(true)
+      setNewBio(user.profile.bio)
+      setNewUsername(user.username) 
+      /*try {
+        setLoading(true) 
+        setUser(
+          JSON.parse(localStorage.getItem('user')))
         const userDocRef = doc(db, "data", user.id);
-        const docSnapshot = await getDoc(userDocRef);
-
-        if (docSnapshot.exists()) {
+        const docSnapshot = await getDoc(userDocRef); 
+        if (docSnapshot.exists()) { 
           const data = docSnapshot.data();
           setUser({
-            user: data?.email,
-            password: data?.password,
-            id: user?.id,
+            ...user,
             username: data?.username,
-            profile: {
-              photo: data?.photo,
+            profile: { 
               bio: data?.bio,
             },
-          });
+          }); 
+          
           localStorage.setItem("user", JSON.stringify(user));
+          setNewUsername(user.username);
+          setNewBio(user.profile.bio || '');
         } else {
           console.log("Documento não encontrado no Firestore.");
         }
-      } catch (error) {
-        console.error("Erro ao obter usuário:", error.message);
-        setUser(JSON.parse(localStorage.getItem("user")));
-      } finally {
-        setNewUsername(user.username);
-        setNewBio(user.profile.bio || '');
-        console.clear()
+      } catch (error) { 
+        console.error("Erro ao obter usuário:", error.message); 
+        toast.error('error')
+      } finally { 
         setLoading(false)
-      }
+      }*/
     }
     getD();
   }, [user.id, setUser]);
@@ -82,14 +83,15 @@ export default function Profile() {
       setLoading(false)
   }
   async function setNewProfile() {
+    setLoading(true)
+    console.clear()
     if (newUsername.length >= 4) {
       setUser({
         ...user,
-        username: setNewUsername,
-        password: null,
+        username: newUsername, 
         profile: {
-          photo: user.photo,
-          bio: null,
+          photo: user?.photo,
+          bio: newBio,
         },
       });
       localStorage.setItem('user', JSON.stringify(user))
@@ -128,14 +130,14 @@ export default function Profile() {
         </button>
         <img id="imgPr" src={FotoP} />
           <label className="labelP">email </label>
-        <input id="emailPr"  value={user.user} />
+        <input id="emailPr" onChange={()=>{let y = 1}} value={user.user} />
         <label className="labelP">username</label>
         <input maxLength={20}
           id="usernamePr"
           value={newUsername}
           onChange={(e) => setNewUsername(e.target.value)}
         />
-        <label className="labelP"></label>
+        <label className="labelP">biography</label>
         <textarea maxLength={120}
           id="txtaP"
           value={newBio}

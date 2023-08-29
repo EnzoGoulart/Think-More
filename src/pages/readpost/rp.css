@@ -48,6 +48,20 @@
     padding: 10px 15%;
     line-break: anywhere;
 }
+#divLikePerfilCRP{
+    font-size: 26px;
+    position: absolute;
+    right: 30px;
+    top: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+    cursor: pointer;
+}
+#divHPerfilCRP{
+    display: flex;
+
+} 
 #linha2CRP{
     width: 45%;
     margin: auto;
