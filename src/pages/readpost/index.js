@@ -17,17 +17,17 @@ export default function ReadPost() {
   const navigate = useNavigate()
   const { email, number } = useParams();
   const [posts, setPosts] = useState({});
-  const [likes, setLikes] = useState(0);
+  const [likes, setLikes] = useState([]);
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [countLikesColor, setCountLikesColor] = useState('#272727')
   const { user, setUser, results, setResults } = useContext(Context);
   const [post, setPost] = useState({});
-  useEffect(() => {
-    loadLikes() 
+  useEffect(() => { 
     const fetchPost = async () => {
+      
       try {
-        setLoading(true)
+        
         const postsRef = collection(db, "posts");
         const q = query(postsRef, where("email", "==", email));
         const querySnapshot = await getDocs(q);
@@ -47,31 +47,35 @@ export default function ReadPost() {
       } catch (error) {
         console.error("Erro ao buscar o documento:", error);
       }
-      setLoading(false)
+      
     };
-    fetchPost();
+    setLoading(true)
+    fetchPost()
+    loadLikes() 
+    setLoading(false)
   }, [email]);
 
   async function loadLikes(){ 
     try { 
+      
       const postsRef = collection(db, "posts");
       const q = query(postsRef, where("email", "==", email), where("idPost", "==", parseInt(number)));
       const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
+      
+      if (!querySnapshot.empty) { 
         let data = querySnapshot.docs.map((doc) => doc.data()); 
         data = data[0]  
-        if(data.curtidas){
+        if(data.curtidas){ 
           data.curtidas.forEach(e => {
-            if(e == user.user){ 
-              setLiked(true)
-              setCountLikesColor('#FF6258')
+            if(e == user.id){ 
+              setLiked(true) 
+              setCountLikesColor('#26a813')
             }
-          });
+          }); 
           setLikes(data.curtidas)
-        }
-        
+        }  
       }
+      
     } catch (e) {
       console.log(e.message);
       toast.error("post wasn't found");
@@ -79,28 +83,56 @@ export default function ReadPost() {
     }
   }
 
-  async function likeThePost(){
-   
-      try{
-        let x = [];
-        if(liked){
-          console.log('b')
-          x = likes.filter(e=> e!=user.user)
-        }else{
-          x = likes
-    
-          console.log(x)
-        }
-        setLikes(x)
-        const userDocRef = doc(db, "posts", where("email","==",email),where("idPost", "==",parseInt(number)));
-      
-        await setDoc(userDocRef, {
-          curtidas: likes,
-        }, { merge: true });
-      }catch(e){
-        console.log(e.message)
-      }
+  async function likeThePost() {
+    setLoading(true)
+    try {  
+      const postsRef = collection(db, "posts");
+        const q = query(postsRef, where("email", "==", email), where("idPost", "==", parseInt(number)));
+        const querySnapshot = await getDocs(q);
+        let data = querySnapshot.docs.map((doc) => doc.data());
+        let idCreator = data[0] 
+      let x = [];
+  
+      /*// Verifique se likes é uma matriz ou converta-o em uma matriz vazia
+      if (!Array.isArray(likes)) {
+        setLikes([])
+      }*/ 
+       
+      if(idCreator.curtidas){
+        idCreator.curtidas.forEach(e => {
+          if(e == user.id){  
+            setLiked(true)
+            setCountLikesColor('#26a813')
+          }
+        });  
+        setLikes(idCreator.curtidas)
+        if (liked) {
+          //filter para remover o usuário da matriz de curtidas  
+          setCountLikesColor('#000')
+          setLikes(likes => likes.filter(e => e !== user.id)) 
+          setLiked(false)
+        } else { 
+          setCountLikesColor('#26a813')
+          setLiked(true)
+          setLikes([...likes,user.id]) 
+        } 
+
+      }else{  
+        setCountLikesColor('#000')
+        setLikes([user.id])
+        setLiked(true)
+      }  
+      const userDocRef = doc(db, "posts", idCreator.idAleatorio); 
+      await setDoc(userDocRef, {
+        curtidas: likes,
+      }, { merge: true }); 
+    } catch (e) {
+      console.log(e );
+    }
+    setLoading(false)
+     
   }
+
   if (loading) {
     return (
       <div>
@@ -122,7 +154,7 @@ export default function ReadPost() {
           
           </div>
           <div id="divLikePerfilCRP" onClick={likeThePost}>
-              <FontAwesomeIcon icon={faHeart} id="likePerfilCRP"/>
+               <p>💚</p>
               <CountLikesPerfil color = {countLikesColor}>{likes.length}</CountLikesPerfil>
             </div>
         </div>

@@ -87,7 +87,7 @@ export default function Post() {
       const horas = dataAtual.getHours();
       const minutos = dataAtual.getMinutes();
       const dataHoraFormatada = `${mes}/${dia}/${ano} ${horas}:${minutos}`;
-      await addDoc(userDocRef, {
+      const dadosNovoPost = await addDoc(userDocRef, {
         idPost,
         username: user.username,
         email: user.user,
@@ -95,6 +95,13 @@ export default function Post() {
         content,
         date: dataHoraFormatada,
       });
+
+      const SetDocRef = doc(db, "posts", dadosNovoPost.id);
+      console.log(dadosNovoPost.id)
+      await setDoc(SetDocRef, {
+        idAleatorio: dadosNovoPost.id
+      }, { merge: true }); 
+
       let pratic = Number(idPost) + 1;
       setIdPost(pratic);
       localStorage.setItem("idPost", pratic);

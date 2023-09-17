@@ -16,8 +16,8 @@ export default function Login() {
   const [senha, setSenha] = useState("");
   useEffect(() => {
     async function getDV() {
-      let local = localStorage.getItem("user");
-      if (!local || local?.password == '' || !local?.password) {
+      let local = localStorage.getItem("user"); 
+      if (!JSON.parse(local) || JSON.parse(local)?.password == '' || !JSON.parse(local)?.password) {
         return;
       }
       let ls = JSON.parse(local);
@@ -34,10 +34,11 @@ export default function Login() {
               user: dado?.user, 
               username: dado?.username,
               profile: {
-                bio: dado?.bio,
+                bio: "",
                 photo: null,
               },
             });
+            localStorage.setItem("user",JSON.stringify(user));
             navigate("/home");
           }
         } else {
@@ -69,7 +70,7 @@ export default function Login() {
 
         if (!querySnapshot.empty) {
           const data = querySnapshot.docs.map((doc) => doc.data());
-          
+          console.log(data[0].bio)
           setUser({
             id: data[0].id,
             user: data[0].email,
@@ -77,7 +78,7 @@ export default function Login() {
             password: data[0].password,
             profile: {
               photo: null,
-              bio: data[0].bio,
+              bio: data[0]?.bio || "",
             },
           });
           toast.success(`welcome back, ${data[0].username}`);

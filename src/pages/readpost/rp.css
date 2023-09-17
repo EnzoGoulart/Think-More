@@ -58,6 +58,9 @@
     flex-direction: column; 
     cursor: pointer;
 }
+.likePerfilCRP{
+    color: red;
+}
 #divHPerfilCRP{
     display: flex;
 

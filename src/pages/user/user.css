@@ -96,14 +96,14 @@
   -webkit-line-clamp: 3; 
   -webkit-box-orient: vertical;
   overflow: hidden;
-  line-break: anywhere;
-  margin: 5px 0px;
-}
-#p1EU{
-  text-align: center;
-  font-size: 18px;
-  color: #272727;
-  font-weight: bold;
+  line-break: anywhere; 
+  margin: 5px 0px; 
+} 
+#p1EU{ 
+  text-align: center; 
+  font-size: 18px; 
+  color: #f0f0f083; 
+  font-weight: bold; 
   padding: 10px 30px;
 }
 #p2EU{
