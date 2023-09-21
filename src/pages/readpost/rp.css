@@ -58,8 +58,41 @@
     flex-direction: column; 
     cursor: pointer;
 }
+@keyframes fade {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  
+  /* Animação de aumentar e diminuir */
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+  }
+   
+  .fade-animation {
+    animation: fade 0.5s ease-in-out;
+  }
+ 
+  .pulse-animation {
+    animation: pulse 0.5s ease-in-out;
+  }
+   
+  .likePerfilActive {
+    color: #26a813;
+  }
 .likePerfilCRP{
     color: red;
+}
+#likes-count{
+    font-size: 16px;
 }
 #divHPerfilCRP{
     display: flex;

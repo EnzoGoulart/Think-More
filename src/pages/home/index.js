@@ -20,9 +20,10 @@ export default function Home() {
       try {
         const userDocRef = doc(db, "data", user.id);
         const docSnapshot = await getDoc(userDocRef);
-
+        
         if (docSnapshot.exists()) {
           const data = docSnapshot.data();
+          
           setUser({
             user: data?.email,
             password: data?.password,
@@ -39,7 +40,7 @@ export default function Home() {
           console.log("Documento não encontrado no Firestore.");
         }
       } catch (error) {
-        console.error("Erro ao obter usuário:", error.message);
+        console.error("Erro ao obter usuário:", error);
         setUser(JSON.parse(localStorage.getItem("user")));
         return;
       }

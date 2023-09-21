@@ -101,7 +101,7 @@ export default function Post() {
       await setDoc(SetDocRef, {
         idAleatorio: dadosNovoPost.id
       }, { merge: true }); 
-
+      
       let pratic = Number(idPost) + 1;
       setIdPost(pratic);
       localStorage.setItem("idPost", pratic);
