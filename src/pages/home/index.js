@@ -11,7 +11,7 @@ import { db } from "../../firebase";
 export default function Home() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [numPostsExibidos, setNumPostsExibidos] = useState(40)
+  const [numPostsExibidos, setNumPostsExibidos] = useState(40) 
   const [dados,setDados] = useState([])
   const { user, setUser, idPost, setIdPost } = useContext(Context);
   useEffect(() => {
@@ -105,10 +105,11 @@ export default function Home() {
                 return(
                     <div
                     onClick={() => {
+                      
                       navigate(`/${post.email}/${post.idPost}`);
                     }}
                     id="containerPostSP"
-                    key={post.idPost}
+                    key={post.idAleatorio}
                   >
                     <img src={Perfil} />
                     <div id="contentPostSP">

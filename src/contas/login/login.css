@@ -1,3 +1,6 @@
+*{
+    transition: all .5s;
+}
 #divL{
     width: 90%;
     max-width: 500px;
@@ -75,3 +78,11 @@
 #lL{
     font-weight: bold;
 }
+#divSenhaL{
+    min-height: 50px;  
+}
+#divForcaL{
+    width: 100%;
+    height: 25px;
+    display: flex;
+}   

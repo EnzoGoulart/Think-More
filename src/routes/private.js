@@ -76,7 +76,7 @@ export default function Private({ children }) {
     }
 
     fetchData();
-  }, [user, setUser, navigate]);
+  }, []);
 
   return children;
 }
